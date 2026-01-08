@@ -26,7 +26,7 @@ class ChatRequest(BaseModel):
 
 
 def get_gemini_tools(mcp_tools):
-
+    """Gets the necessary tools for information gathering of pokemon and berry entities"""
     list_of_blueprints = []
 
     for tool in mcp_tools:
@@ -44,6 +44,7 @@ def get_gemini_tools(mcp_tools):
 
 @app.post("/chat")
 async def test_handshake(request: ChatRequest):
+    """Connects to the client and creates a chat session"""
     server_url = "http://localhost:8000/mcp"
 
 
@@ -66,18 +67,15 @@ async def test_handshake(request: ChatRequest):
                                    "If the user asks about anything else (like programming or general jokes), answer normally using your own knowledge."]
 
 
-            # If we don't have tools yet, go get them (Sequential wait - happens only once!)
             if cached_tools is None:
                 print("Fetching tools")
                 mcp_resp = await session.list_tools()
                 cached_tools = get_gemini_tools(mcp_resp.tools)
             else:
-                # pocket is NOT empty. We skip 'await session.list_tools()'!
                 print("DEBUG: Already have tools. Skipping sequential wait.")
 
 
-            # find_tools = await session.list_tools()
-            # gemini_tools = get_gemini_tools(find_tools.tools)
+
             ## use or gemini-2.5-flash-lite or gemini-2.5-flash,
             response = client.models.generate_content(
                 model = "gemini-2.5-flash",

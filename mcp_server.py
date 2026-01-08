@@ -39,16 +39,6 @@ async def get_pokemon_info(name_or_id: str) -> str:
         return f"Error: {str(e)}"
 
 
-# @mcp.tool()
-# async def get_catalog_stats(category: str) -> str:
-#     """
-#     Returns how many items exist in a category and lists the first few.
-#     Use this to see what abilities, types, or berries are available.
-#     """
-#     catalog = await repo.get_resource_list(category)
-#
-#     if not catalog:
-#         return f"I couldn't find a category called '{category}'."
 
 if __name__ == "__main__":
     mcp.run(transport="streamable-http")

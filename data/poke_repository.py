@@ -31,6 +31,7 @@ class Poke_Repo:
             return await response.json()
 
     async def get_berry_info(self, berry_id: int) -> Berry:
+        """Gets the information about the berry including the berry properties"""
         berry_data = await self.fetch_json_data(f"berry/{berry_id}")
         berry_flavor_values = {}
         used_flavors = []
@@ -41,7 +42,7 @@ class Poke_Repo:
         for item in berry_data["flavors"]:
             key = item["flavor"]["name"]
             value = item["potency"]
-            # if a new flavor is added then it stays at the old ones so it doesnt trip up..?
+
             if key in used_flavors:
                 berry_flavor_values[key] = value
         all_flavor_values = BerryFlavor(**berry_flavor_values)
@@ -53,7 +54,7 @@ class Poke_Repo:
 
 
     async def get_pokemon_info(self, name_or_id: str) -> Pokemon:
-
+        """Gets the information about the pokemon with a string as input"""
         poke_data = await self.fetch_json_data(f"pokemon/{str(name_or_id).lower().strip()}")
         weight_and_height_conversion = 10 #to converto to kg and meters
 
