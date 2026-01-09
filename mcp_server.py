@@ -1,7 +1,6 @@
 from mcp.server.fastmcp import FastMCP
 from data.poke_repository import Poke_Repo
 
-#TODO: De literal string niet literal maklen als het gwn een int is
 
 mcp = FastMCP("Poke-API", json_response=True)
 repo = Poke_Repo()
